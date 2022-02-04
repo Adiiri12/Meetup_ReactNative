@@ -5,5 +5,7 @@ export const NavigationTabs = {
 
 export const NavigationScreens = {
     Home : {name:'home', title : 'Home'},
-    Profile : {name:'profile', title : 'profile'}
+    Profile : {name:'profile', title : 'Profile'},
+    Login : {name : 'login' , title : 'Login'},
+    CreateAccount : {name : 'Create' , title : 'CreateAccount'},
 }

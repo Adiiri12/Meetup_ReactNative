@@ -9,9 +9,7 @@ const ProfileNavigationStackComponent = () => {
             <ProfileNavigationStack.Screen
                 name={NavigationScreens.Profile.name}
                 component={ProfilePage}
-                options={{
-                    title: NavigationScreens.Profile.title,
-                }}
+                options={{ title: NavigationScreens.Profile.title }}
             />
         </ProfileNavigationStack.Navigator>
     );

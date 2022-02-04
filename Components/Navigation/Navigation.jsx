@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import {NavigationTabs} from '../../Common/NavigationTabs/navigation';
+import {NavigationScreens} from '../../Common/NavigationTabs/navigation';
 import HomeNavigationStackComponent from '../../Components/Navigation/HomeStack';
 import ProfileNavigationStackComponent from '../../Components/Navigation/Profile';
 import React from 'react';
@@ -15,6 +16,7 @@ const Navigation = ({theme}) =>{
     <NavigationContainer theme={theme}>
         <TabNavigator.Navigator
          screenOptions={({ route }) => ({
+             headerShown : false,
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName = '';
                 if (route.name === NavigationTabs.Home.name) {
@@ -36,12 +38,12 @@ const Navigation = ({theme}) =>{
           <TabNavigator.Screen
                         name={NavigationTabs.Home.name}
                         component={HomeNavigationStackComponent}
-                        options={{ title: NavigationTabs.Home.title }}
+                        options={{ title: NavigationScreens.Home.title }}
                     />
                     <TabNavigator.Screen
                         name={NavigationTabs.Profile.name}
                         component={ProfileNavigationStackComponent}
-                        options={{ title: NavigationTabs.Profile.title}}
+                        options={{ title: NavigationScreens.Profile.title}}
                     />
         </TabNavigator.Navigator>
     </NavigationContainer>
