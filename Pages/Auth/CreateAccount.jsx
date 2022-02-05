@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet } from 'react-native';
-//import { Button, Text } from 'react-native-elements';
+import {KeyboardAvoidingViewBase, TouchableOpacity, View, SafeAreaView,StyleSheet } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 import { NavigationScreens } from '../../Common/NavigationTabs/navigation';
 import { useTheme } from 'react-navigation'
 
@@ -11,7 +11,9 @@ const Create = ({ navigation }) => {
      
     return (
         //<KeyboardAvoidingViewBase>
-             <View>Login Screen</View>
+        <SafeAreaView>
+                 <Text>Create Account Screen</Text>
+        </SafeAreaView>
         //</KeyboardAvoidingViewBase>
     )
     

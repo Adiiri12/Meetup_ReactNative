@@ -1,4 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { Button, Text } from 'react-native-elements';
 import React from 'react';
 import { NavigationScreens } from '../../Common/NavigationTabs/navigation';
 import Login from '../../Pages/Auth/Login';
@@ -11,7 +12,10 @@ const LoginStack = createStackNavigator();
 
 const LoginStackComponent = () => {
     return (
-        <LoginStack.Navigator>
+        <LoginStack.Navigator
+        screenOptions={{
+            headerShown: false
+          }}>
             <LoginStack.Screen
                 name={NavigationScreens.Login.name}
                 component={Login}
@@ -21,9 +25,13 @@ const LoginStackComponent = () => {
             />
               <LoginStack.Screen
                 name={NavigationScreens.CreateAccount.name}
-                component={Login}
+                component={Create}
                 options={{ 
-                    title: NavigationScreens.CreateAccount.title 
+                    headerShown : true,
+                    headerTitle: NavigationScreens.CreateAccount.title,
+                    headerRight: () => (
+                        <Text>Next</Text>
+                    )
                 }}
             />
         </LoginStack.Navigator>
