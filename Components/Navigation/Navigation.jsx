@@ -2,18 +2,23 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import {NavigationTabs} from '../../Common/NavigationTabs/navigation';
 import {NavigationScreens} from '../../Common/NavigationTabs/navigation';
+import LoginStackComponent from './LoginStack';
 import HomeNavigationStackComponent from '../../Components/Navigation/HomeStack';
 import ProfileNavigationStackComponent from '../../Components/Navigation/Profile';
-import React from 'react';
+import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from 'react-navigation';
 
 const TabNavigator = createBottomTabNavigator();
 
+
 const Navigation = ({theme}) =>{
+    const [clicked, setClicked] = useState(false);
 
  return (
     <NavigationContainer theme={theme}>
+         {!clicked && <LoginStackComponent />}
+         {clicked && (
         <TabNavigator.Navigator
          screenOptions={({ route }) => ({
              headerShown : false,
@@ -46,6 +51,7 @@ const Navigation = ({theme}) =>{
                         options={{ title: NavigationScreens.Profile.title}}
                     />
         </TabNavigator.Navigator>
+         )}
     </NavigationContainer>
  )};
 

@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { NavigationScreens } from '../../Common/NavigationTabs/navigation';
-import Login from '../../Pages/Auth/LoginScreen';
+import Login from '../../Pages/Auth/Login';
 import Create from '../../Pages/Auth/CreateAccount';
 
 
@@ -11,22 +11,22 @@ const LoginStack = createStackNavigator();
 
 const LoginStackComponent = () => {
     return (
-        <HomeNavigationStack.Navigator>
-            <HomeNavigationStack.Screen
+        <LoginStack.Navigator>
+            <LoginStack.Screen
                 name={NavigationScreens.Login.name}
                 component={Login}
                 options={{ 
                     title: NavigationScreens.Login.title 
                 }}
             />
-              <HomeNavigationStack.Screen
+              <LoginStack.Screen
                 name={NavigationScreens.CreateAccount.name}
                 component={Login}
                 options={{ 
                     title: NavigationScreens.CreateAccount.title 
                 }}
             />
-        </HomeNavigationStack.Navigator>
+        </LoginStack.Navigator>
     );
 };
 

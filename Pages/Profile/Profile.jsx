@@ -6,8 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from 'react-navigation'
 
-const theme = useTheme();
-const styles = useStyles(theme);
+// const theme = useTheme();
+// const styles = useStyles(theme);
 
 const Profile =  ({ navigation }) => {
     return (
@@ -20,8 +20,8 @@ const Profile =  ({ navigation }) => {
       </View>
     );
   }
-  const styles = (theme) =>
-  StyleSheet.create({
+
+  const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'white',
