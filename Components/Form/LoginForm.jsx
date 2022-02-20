@@ -2,23 +2,38 @@ import React, { useState } from 'react'
 import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions} from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { Formik } from 'formik';
+import { useAuth } from '../../firebase/AuthProvider';
 import { TextInput } from 'react-native-gesture-handler';
 import { global } from '../../CSS/Styles';
 
 
 const LoginForm = () =>{
+
+  const { signIn , notLogedin } = useAuth();
+  const [errors , setErrors] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async (emailaddress, password) =>{
+    try {
+      await signIn(emailaddress,password)
+    }catch{
+          setErrors('not working')
+    }
+  }
      
     return (
       <View style ={global.Logincontainer}>
           <Formik
           initialValues={{emailaddress : '' , password : ''}}
           onSubmit={(values) =>{
-          console.log(values);
+          //console.log();
+          handleSignup(values.emailaddress,values.password);
+          //alert('done');
           }}
           >
               {(props) => (
                <View>
-                   <Text style={global.SignText}>Email </Text>
+                   <Text style={global.SignText}>Email</Text>
                    <TextInput
                     style = {global.Sinput}
                     placeholder = 'email address'
@@ -38,7 +53,7 @@ const LoginForm = () =>{
                 titleStyle = {global.BtitleStyle}
                 buttonStyle = {global.ButtonStyle}
                 containerStyle = {global.BcontainerStyle}
-               onPress={props.handleSubmit}
+                onPress={props.handleSubmit}
                 />
              </View>
               )}

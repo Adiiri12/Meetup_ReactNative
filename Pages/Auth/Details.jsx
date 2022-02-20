@@ -6,18 +6,17 @@ import { useTheme } from 'react-navigation'
 import { global } from '../../CSS/Styles';
 //import LoginForm from '../../Components/Form/LoginForm';
 import { Formik } from 'formik';
-import CreateAccountForm from '../../Components/Form/CreateAccoutForm';
-import { useAuth } from '../../firebase/AuthProvider';
+import DetailsForm from '../../Components/Form/DetailsForm';
 
 
-const Create = ({ navigation }) => {
+const Details = ({ navigation }) => {
      
     return (
         <SafeAreaView style = {styles.container}>
         <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'position' : 'height'}>
-                <Text style={global.StepText}>Step 1 of 4 </Text>
-                <Text style={global.CreateText}>Create your account</Text>
-                 <CreateAccountForm props = {NavigationScreens.Detail.name}/>
+                <Text style={global.StepText}>Step 2 of 4 </Text>
+                <Text style={global.CreateText}>Add Details</Text>
+                 <DetailsForm props = {NavigationScreens.Bio.name}/>
         </KeyboardAvoidingView>
         </SafeAreaView>
     )
@@ -33,5 +32,5 @@ const styles = StyleSheet.create({
     }
   })
 
-  export default Create;
+  export default Details;
 

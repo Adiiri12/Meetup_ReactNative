@@ -7,6 +7,7 @@ import { global } from '../../CSS/Styles';
 //import LoginForm from '../../Components/Form/LoginForm';
 import { Formik } from 'formik';
 import LoginForm from '../../Components/Form/LoginForm';
+import CreateAccountForm from '../../Components/Form/CreateAccoutForm';
 
 
 var height = Dimensions.get('window').height;

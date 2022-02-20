@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from './Components/Navigation/Navigation';
 import { DefaultTheme } from '@react-navigation/native';
+import { AuthProvider } from './firebase/AuthProvider';
 
 
 const theme = {
@@ -15,7 +16,9 @@ const theme = {
 const App = () => {
     return (
       
+        <AuthProvider>
             <Navigation theme={theme} />
+        </AuthProvider>
 
     );
 };
