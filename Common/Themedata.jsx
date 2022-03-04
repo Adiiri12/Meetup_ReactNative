@@ -1,49 +1,49 @@
 import React, { useState } from 'react'
 
-export const Rows = [
+export const Rows =[
        {
             id : 1,
             name : 'Homeless Shelters',
-            selected : 'true'
+            selected : true
        },
        {
            id:2,
            name : 'Food Banks',
-           selected : 'true'
+           selected : true
        },
        {
         id : 3,
         name : 'Tutoring',
-        selected : 'true'
+        selected : true
        },
        {
         id : 4,
         name : 'Technology',
-        selected : 'true'
+        selected : true
        },
        {
         id : 5,
         name : 'Medicine',
-        selected : 'true'
+        selected : true
        },
        {
         id : 6,
         name : 'Hospitals',
-        selected : 'true'
+        selected : true
        },
        {
         id : 7,
         name : 'Libraries',
-        selected : 'true'
+        selected : true
        },
        {
         id : 8,
         name : 'Environmental',
-        selected : 'true'
+        selected : true
        },
        {
         id : 9,
         name : 'Political',
-        selected : 'true'
+        selected : true
      }
 ]

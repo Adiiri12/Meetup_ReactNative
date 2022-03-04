@@ -182,7 +182,16 @@ CreateInput: {
 },
 StepText:{
     textAlign: 'left',
-    marginTop: 0,
+    marginTop: -30,
+    marginLeft : 30,
+    //fontFamily: "Montserrat",
+    fontSize: 18,
+    fontWeight: '300',
+    color: "#233975"
+},
+SText:{
+    textAlign: 'left',
+    marginTop: 70,
     marginLeft : 30,
     //fontFamily: "Montserrat",
     fontSize: 18,

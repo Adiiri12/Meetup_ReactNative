@@ -36,14 +36,14 @@ const DetailsForm = ({props}) =>{
                     onChangeText={props.handleChange('First_name')}
                     value={props.values.First_name}
                    />
-                  <Text style={global.CTs}>Account_name</Text>
+                  <Text style={global.CTs}>Last Name</Text>
                     <TextInput
                     style = {global.CreateInput}
                     placeholder = 'Last Name'
                     onChangeText={props.handleChange('Second_name')}
                    value={props.values.Second_name}
                    />
-                    <Text style={global.CTs}>Date_of_Birth</Text>
+                    <Text style={global.CTs}>Account name</Text>
                     <TextInput
                     style = {global.CreateInput}
                     placeholder = 'Account name'
@@ -59,7 +59,9 @@ const DetailsForm = ({props}) =>{
                  onPress={props.handleSubmit}
                 />
             </View>
+            
               )}
+              
         </Formik>
       </View>
     )

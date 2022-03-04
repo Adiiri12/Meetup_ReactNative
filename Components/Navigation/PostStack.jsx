@@ -11,7 +11,7 @@ const PostNavigationStackComponent = () => {
             <PostNavigationStack.Screen
                 name={NavigationScreens.Post.name}
                 component={Post}
-                options={{ title: NavigationScreens.Post.title }}
+                options={{ headerShown: false }}
             />
         </PostNavigationStack.Navigator>
     );

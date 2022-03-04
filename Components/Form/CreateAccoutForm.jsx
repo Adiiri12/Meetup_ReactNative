@@ -105,11 +105,6 @@ const CreateAccountForm = ({props}) =>{
             </View>
               )}
         </Formik>
-        <TouchableOpacity
-        onPress={() => navigations.navigate(props)}
-        >
-        <Text style={global.skip}>Skip</Text>
-        </TouchableOpacity>
       </View>
     )
 } 

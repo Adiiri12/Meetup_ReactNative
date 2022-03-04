@@ -1,4 +1,5 @@
 import React from 'react';
+import 'react-native-gesture-handler'
 import Navigation from './Components/Navigation/Navigation';
 import { DefaultTheme } from '@react-navigation/native';
 import { AuthProvider } from './firebase/AuthProvider';

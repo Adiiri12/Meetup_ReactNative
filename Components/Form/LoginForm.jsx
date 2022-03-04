@@ -46,6 +46,7 @@ const LoginForm = () =>{
                     placeholder = 'Password'
                     onChangeText={props.handleChange('password')}
                    value={props.values.password}
+                   secureTextEntry
                    />
                 <Button
                 title="Sign In"

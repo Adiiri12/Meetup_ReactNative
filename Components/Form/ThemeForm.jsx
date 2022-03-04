@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import {KeyboardAvoidingViewBase, TouchableOpacity,TouchableWithoutFeedback, View, StyleSheet,Dimensions} from 'react-native';
+import React, { useState , useEffect } from 'react'
+import {KeyboardAvoidingViewBase, TouchableOpacity,TouchableWithoutFeedback, TouchableNativeFeedback,View, StyleSheet,Dimensions} from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { NavigationScreens } from '../../Common/NavigationTabs/navigation';
 import { useTheme } from 'react-navigation'
@@ -9,20 +9,68 @@ import { TextInput } from 'react-native-gesture-handler';
 import { global } from '../../CSS/Styles';
 import { Formik } from 'formik';
 import { Zocial } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { auth, firestore , storage } from '../../firebase/firebase';
 
 
 
 const ThemeForm = () =>{
+  const navigations = useNavigation();
+  const {currentUser} = useAuth();
     //const [Row, setSelectedId] = useState(null);
+    const [Row , setRows] = useState();
+    const [data , setData] = useState([]);
+    const [selected , setSelected] = useState(true);
+    useEffect(() => {
+      setRows(Rows);
+      //console.log(Row);
+    },[Row],selected,[data]);
+
+    const Themes = async(Row) => {
+      const db = firestore
+      const batch = db.batch()
+
+      Row.map((item) => {
+        //console.log(item);
+        batch.set(db.collection('themes').doc(currentUser.email), item);
+      })
+      // Commit the batch
+      return await batch.commit()
+    }
+
+
+    const handle = (id) =>{
+      selected === true ? setSelected(false) : setSelected(true)
+
+    Row.map((item)=>{if(item.id === id){
+         if(item.selected === true){
+           //setSelected(false)
+           item.selected = false
+         }
+        
+         else if(item.selected  === false){
+           //setSelected(true)
+           item.selected = true
+           //setSelected(item.selected)
+         }
+         //console.log(Row)
+         const copy = Row;
+         setData(copy)
+         //console.log(Row.selected);
+         return [...Row]
+       }
+      }) 
+    }
     return (
       <View style ={styles.container}>
           <Formik
           initialValues={{Code : ''}}
           onSubmit={(values) =>{
-          console.log(values);
-          Rows.map((item, index) =>  {
-            console.log(item);
-          });
+            //console.log(Row);
+            console.log(...Row)
+            //console.log(...Row)
+            Themes(Row);
+            
           }}
           >
               {(props) => (  
@@ -30,21 +78,25 @@ const ThemeForm = () =>{
                  <View style = {styles.boxContainer}>
                     <FlatList
                        
-                        data = {Rows}
+                        data = {Row}
                         keyExtractor={item => item.id}
                         numColumns={3}
-                        //extraData={R}
-                        renderItem = {({item}) => {
+                        extraData =  {selected}
+                        renderItem = {({item , index}) => {
+                          //console.log(values);
+                          // Row.map((item, index) =>  {
+                          //   console.log(item);
+                          // });
                             //const box = item.selected === true ? styles.TboxSize : styles.FboxSize
                             //onst Text = item.selected === true ? styles.FalseText : styles.TrueText
 
-                            console.log(item.selected);
+                            //console.log(item);
                             return (
-                                <View style = {item.selected === 'true' ? styles.FboxSize : styles.TboxSize}>
+                                <View style = {item.selected === false ? styles.FboxSize : styles.TboxSize}>
                                     <TouchableOpacity
-                                      onPress={() => item.selected === 'false' ? item.selected = 'true' : item.selected = 'false'}
+                                      onPress={() => handle(item.id)}
                                     >
-                                    <Text style = {item.selected === 'true' ? styles.FalseText : styles.TrueText }>{item.name}</Text>
+                                    <Text style = {item.selected === false ? styles.FalseText : styles.TrueText }>{item.name}</Text>
                                     </TouchableOpacity >
                                     
                                 
@@ -55,7 +107,7 @@ const ThemeForm = () =>{
                     />
                  </View>
                 <Button
-                title="Skip "
+                title="Add"
                 iconContainerStyle = {global.BiconContainerStyle}
                 titleStyle = {global.CtitleStyle}
                 buttonStyle = {global.ButtonStyle2}
@@ -64,7 +116,7 @@ const ThemeForm = () =>{
                 />
              </View>
               )}
-        </Formik>
+         </Formik> 
       </View>
     )
 } 

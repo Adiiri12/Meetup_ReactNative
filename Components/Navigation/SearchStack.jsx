@@ -11,7 +11,7 @@ const SearchNavigationStackComponent = () => {
             <SearchNavigationStack.Screen
                 name={NavigationScreens.Search.name}
                 component={Search}
-                options={{ title: NavigationScreens.Search.title }}
+                options={{ headerShown: false }}
             />
         </SearchNavigationStack.Navigator>
     );

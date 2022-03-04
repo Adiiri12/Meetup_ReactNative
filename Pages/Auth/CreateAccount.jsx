@@ -14,7 +14,7 @@ const Create = ({ navigation }) => {
      
     return (
         <SafeAreaView style = {styles.container}>
-        <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'position' : 'height'}>
+       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : 'height'}>
                 <Text style={global.StepText}>Step 1 of 4 </Text>
                 <Text style={global.CreateText}>Create your account</Text>
                  <CreateAccountForm props = {NavigationScreens.Detail.name}/>

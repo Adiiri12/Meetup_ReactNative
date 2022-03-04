@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView} from 'react-native';
+import {KeyboardAvoidingView, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView} from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { NavigationScreens } from '../../Common/NavigationTabs/navigation';
 import { useTheme } from 'react-navigation'
@@ -14,13 +14,13 @@ const Themes = ({ navigation }) => {
     return (
         //<KeyboardAvoidingViewBase>
         <SafeAreaView style = {styles.container}>
-            <View>
-                <Text style={global.StepText}>Step 3 of 4 </Text>
+            <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'position' : 'height'}>
+                <Text style={global.SText}>Step 3 of 4 </Text>
                 <Text style={global.CreateText}>Which Themes Interest You</Text>
                 <View style = {styles.Form}> 
                  <ThemeForm/>
                  </View>
-             </View>
+             </KeyboardAvoidingView>
         </SafeAreaView>
         //</KeyboardAvoidingViewBase>
     )
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     },
     Form :{
         flex : 2,
-        marginTop : 0,
+        marginTop : 30,
+        marginBottom :40
         //marginBottom : 350,
      },
      Text:{

@@ -18,7 +18,7 @@ const SignUpHeader = ({props}) => {
                 type="ionicon"
                 name="ios-arrow-back-outline" 
                 color="white"
-                onPress={() => navigations.goBack()}
+                //onPress={() => navigations.goBack()}
                 />
                 
             }
@@ -42,7 +42,7 @@ const SignUpHeader = ({props}) => {
         alignItems: 'center',
         backgroundColor: '#233975',
         flexDirection : 'column',
-        paddingTop: Platform.OS === 'android' ? 25 : 10
+        //paddingTop: Platform.OS === 'android' ? 25 : 10
       },
       heading: {
         color: 'white',
