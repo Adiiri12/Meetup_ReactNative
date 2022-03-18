@@ -10,19 +10,19 @@ export const AuthProvider = ({ children }) => {
 
     const [loading, setLoading] = useState(false);
     
+    const Login = () =>{
+       return setLogedin(true);
+    }
+    const Logout = () =>{
+        return setLogedin(false);
+    }
     const signUp = (email, password) => {
         return auth.createUserWithEmailAndPassword(email, password);
-        setLogedin(false);
-        console.log(notLogedin);
     };
     const signIn = (email, password) => {
-        setLogedin(true);
-        console.log(notLogedin);
         return auth.signInWithEmailAndPassword(email, password);
     };
     const signOut = () => {
-        console.log(notLogedin);
-        setLogedin(false);
         return auth.signOut();
     };
     const resetPassword = (email) => {
@@ -46,7 +46,10 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const value = {
-        currentUser,notLogedin,
+        currentUser,
+        notLogedin,
+        Login,
+        Logout,
         signIn,
         signUp,
         signOut,

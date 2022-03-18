@@ -18,5 +18,11 @@ export const NavigationScreens = {
     Detail : {name : 'Details' , title : 'Details'},
     Verify : {name : 'Verify' , title : 'VerfiyAcccount'},
     Themes : {name: 'Themes' , title : 'Themes'},
-    Bio : {name: 'Bio' , title : 'Bio'}
+    Bio : {name: 'Bio' , title : 'Bio'},
+
+    //Profile Screens
+    Setting : {name:'Setting', title : 'Settings'},
+
+    //Post Screen:
+    Bookmarks : {name : 'Bookmarks' , title : 'Bookmark' }
 }

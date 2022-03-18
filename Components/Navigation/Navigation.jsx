@@ -23,10 +23,11 @@ const Navigation = ({theme}) =>{
     const { currentUser , notLogedin } = useAuth();
     const [log ,  notLog] = useState(true);
 
+    console.log(notLogedin)
  return (
     <NavigationContainer theme={theme}>
-         {!log && <LoginStackComponent />}
-         {log &&(
+         {!notLogedin && <LoginStackComponent />}
+         {notLogedin && (
             <DrawStack/>)}
     </NavigationContainer>
  )};

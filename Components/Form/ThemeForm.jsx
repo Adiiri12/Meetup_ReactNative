@@ -10,7 +10,9 @@ import { global } from '../../CSS/Styles';
 import { Formik } from 'formik';
 import { Zocial } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../firebase/AuthProvider';
 import { auth, firestore , storage } from '../../firebase/firebase';
+
 
 
 
@@ -32,7 +34,7 @@ const ThemeForm = () =>{
 
       Row.map((item) => {
         //console.log(item);
-        batch.set(db.collection('themes').doc(currentUser.email), item);
+        batch.set(db.collection('themes').doc(currentUser.email).collection('theme').doc(item.name),item);
       })
       // Commit the batch
       return await batch.commit()
@@ -70,6 +72,7 @@ const ThemeForm = () =>{
             console.log(...Row)
             //console.log(...Row)
             Themes(Row);
+            navigations.navigate(NavigationScreens.Login.name)
             
           }}
           >

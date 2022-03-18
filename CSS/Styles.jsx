@@ -131,6 +131,32 @@ export const global = StyleSheet.create({
          marginLeft: 20,
          marginTop : 30
     },
+    PiconContainerStyle:{ 
+        //marginRight: 10,
+        marginTop : 5
+    },
+    PtitleStyle:{ 
+        fontWeight: '600',
+        alignItems : 'center',
+        marginRight : 10,
+        color: '#233975',
+        //fontFamily: "Montserrat",
+    },
+    PuttonStyle:{
+         backgroundColor: '#FFFFFF',
+         borderColor: 'transparent',
+         borderWidth: 0,
+         borderRadius: 30
+    },
+    PcontainerStyle:{
+        marginTop : 20,
+        marginBottom : 20,
+        width: 300,
+         marginHorizontal: 50,
+         marginVertical: 10,
+         marginLeft: 20,
+         marginTop : 30
+    },
     CtitleStyle:{ 
         fontWeight: '600',
         alignItems : 'center',
@@ -169,15 +195,16 @@ export const global = StyleSheet.create({
 },
 CreateInput: {
     marginTop : 3,
+    marginBottom : 5,
     marginLeft : 25,
     width: 300,
     height: 40,
     backgroundColor: '#FFFFFF',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: '#ccc',
+    borderColor: '#233975',
     borderBottomWidth: 2,
-    fontSize: 10,
+    fontSize: 14,
     //fontFamily: "Montserrat"
 },
 StepText:{
@@ -249,9 +276,25 @@ image: {
     backgroundColor: '#FFFFFF',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    paddingTop:  20,
+    paddingTop:  40,
     borderColor: '#233975',
     borderWidth:1,
+    borderRadius: 15, 
+    fontSize: 14,
+    textAlignVertical : "top" 
+    //fontFamily: "Montserrat"
+},
+multi2: {
+    marginTop : 3,
+    marginLeft : 20,
+    width: 300,
+    height: 150,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 3,
+     paddingHorizontal: 4,
+    //paddingTop:  20,
+    borderColor: '#233975',
+    borderWidth:2,
     borderRadius: 15, 
     fontSize: 10,
     textAlignVertical : "top" 

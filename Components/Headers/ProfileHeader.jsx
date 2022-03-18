@@ -1,44 +1,58 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { Header ,  Text , Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView} from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
 import { NavigationScreens, NavigationTabs } from '../../Common/NavigationTabs/navigation';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+import { useAuth } from '../../firebase/AuthProvider';
+import { getUserbyEmail }  from '../../firebase/UserProvider';
 
-const SearchHeader = ({navigation}) => {
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const ProfileHeader = ({navigation}) => {
     const navigations = useNavigation();
+    const {currentUser} = useAuth();
+    //getUserbyEmail(currentUser.email)
     //console.log(navigation);
+    const [user, setUsers] = useState([]);
+    const [loadinguUsers, setLoadinguUsers] = useState(false);
+
+    useEffect(() => {
+        loadinguUser();
+    },[])
+
+    
+    const loadinguUser = async () => {
+        try {
+            setLoadinguUsers(true);
+            const users = await getUserbyEmail(currentUser.email);
+            setUsers(users)
+            console.log(user.imageURL)
+        } catch (err) {
+           console.log(err)
+        } finally {
+            setLoadinguUsers(false);
+        }
+    };
+
     return (
           <Header
            containerStyle = {styles.headerContainer}
-            leftComponent={
-                <View style={styles.headerRight}>
-                  <TouchableOpacity
-                    style= {styles.image}
-                    onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-                  >
-                  <Avatar.Image size={47} source={require('../../assets/Avatar_Light.png')} colour = {'black'} onPress={() => {console.log('works')}}/>
-                  </TouchableOpacity>
-                </View>
-            }
             centerComponent = {
-              <View style= {styles.Sinput}>
-                    <TouchableOpacity
-                    onPress={() => navigations.navigate(NavigationTabs.Search.name)}
-                    >
-                     <Icon
-                      type="ionicon"
-                      name="ios-search" 
-                      color="#233975"
-                      size = '20'
-                      style={{marginRight : 200, marginTop : 6}}
-                      />
-                    <Text style ={{color:'grey',fontSize:13 , marginLeft : 90 , marginTop : -17}}>Search</Text>
-                  </TouchableOpacity>
+              <View style = {{ width : windowWidth/1.1 , alignItems: 'center', justifyContent : 'center',}}>
+                <Avatar.Image size={50} source={{uri : user.imageURL}} colour = {'black'} onPress={() => {console.log('works')}}/>
+                <View style =  {{flexDirection : 'row' , marginTop : 20 , marginBottom : 10}}>
+                    <Text style = {{fontSize : 12 , color : 'white'}}> Following 5</Text>
+                    <Text style = {{ fontSize : 12 , color : 'white'}}> Follwers 25</Text>
+                </View>
+                <View style = {{marginTop : 10 , marginBottom : 0}}>
+                <Text style = {{marginLeft : -15 , fontSize : 12 , color : 'white'}}>Bio: Welcome to my account I am a belive that everyone should re</Text>
+                </View>
               </View>
             }
           />
@@ -102,4 +116,4 @@ const SearchHeader = ({navigation}) => {
 
 
 
-export  default SearchHeader;
+export  default ProfileHeader;

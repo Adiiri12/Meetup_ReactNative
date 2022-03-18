@@ -2,42 +2,32 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Header ,  Text , Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView} from 'react-native';
+import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView,TextInput} from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
 import { NavigationScreens, NavigationTabs } from '../../Common/NavigationTabs/navigation';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { useNavigation } from '@react-navigation/native';
-import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 
-const SearchHeader = ({navigation}) => {
+const DiscoverHeader = ({navigation}) => {
     const navigations = useNavigation();
     //console.log(navigation);
     return (
           <Header
            containerStyle = {styles.headerContainer}
-            leftComponent={
-                <View style={styles.headerRight}>
-                  <TouchableOpacity
-                    style= {styles.image}
-                    onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-                  >
-                  <Avatar.Image size={47} source={require('../../assets/Avatar_Light.png')} colour = {'black'} onPress={() => {console.log('works')}}/>
-                  </TouchableOpacity>
-                </View>
-            }
             centerComponent = {
               <View style= {styles.Sinput}>
                     <TouchableOpacity
-                    onPress={() => navigations.navigate(NavigationTabs.Search.name)}
                     >
                      <Icon
                       type="ionicon"
                       name="ios-search" 
                       color="#233975"
                       size = '20'
-                      style={{marginRight : 200, marginTop : 6}}
+                      style={{marginRight : 260, marginTop : 6}}
                       />
-                    <Text style ={{color:'grey',fontSize:13 , marginLeft : 90 , marginTop : -17}}>Search</Text>
+                    <TextInput style ={{color:'black',fontSize:13 , marginLeft : 40 , marginTop : -17}}
+                     placeholder = 'email address'
+                    />
                   </TouchableOpacity>
               </View>
             }
@@ -82,16 +72,16 @@ const SearchHeader = ({navigation}) => {
         //resizeMode: 'contain'
       },
       Sinput: {
-        marginTop : 16,
-        marginLeft : 35,
-        width: 245.36,
+        marginTop : 4,
+        marginLeft : -15,
+        width: 300.36,
         height: 34,
         backgroundColor: '#FFFFFF',
         //paddingVertical: 10,
         //paddingHorizontal: 15,
         //borderColor: 'white',
         //borderWidth:3,
-        borderRadius: 150, 
+        borderRadius: 10, 
         fontSize: 10,
         //fontFamily: "Montserrat"
     }
@@ -102,4 +92,4 @@ const SearchHeader = ({navigation}) => {
 
 
 
-export  default SearchHeader;
+export  default DiscoverHeader;

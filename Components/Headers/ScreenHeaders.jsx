@@ -3,11 +3,10 @@ import { Header ,  Text , Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView} from 'react-native';
-import { DrawerActions } from '@react-navigation/native';
+import {DrawerActions , DrawerItem} from '@react-navigation/drawer';
 import { NavigationScreens, NavigationTabs } from '../../Common/NavigationTabs/navigation';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { useNavigation } from '@react-navigation/native';
-import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 
 const SearchHeader = ({navigation}) => {
     const navigations = useNavigation();
@@ -19,9 +18,9 @@ const SearchHeader = ({navigation}) => {
                 <View style={styles.headerRight}>
                   <TouchableOpacity
                     style= {styles.image}
-                    onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                    onPress={() => navigation.goBack()}
                   >
-                  <Avatar.Image size={47} source={require('../../assets/Avatar_Light.png')} colour = {'black'} onPress={() => {console.log('works')}}/>
+                    <Text style ={{color:'white',fontSize:15}}>Next</Text>
                   </TouchableOpacity>
                 </View>
             }
@@ -35,7 +34,7 @@ const SearchHeader = ({navigation}) => {
                       name="ios-search" 
                       color="#233975"
                       size = '20'
-                      style={{marginRight : 200, marginTop : 6}}
+                      style={{marginLeft : 200, marginTop : 6}}
                       />
                     <Text style ={{color:'grey',fontSize:13 , marginLeft : 90 , marginTop : -17}}>Search</Text>
                   </TouchableOpacity>

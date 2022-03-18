@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions} from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { Formik } from 'formik';
@@ -9,17 +9,13 @@ import { global } from '../../CSS/Styles';
 
 const LoginForm = () =>{
 
-  const { signIn , notLogedin } = useAuth();
+  const { signIn , Login} = useAuth();
   const [errors , setErrors] = useState('');
   const [loading, setLoading] = useState(false);
+  const [emailaddress , setAdress] = useState('')
+  const [password , setPassword] = useState('')
 
-  const handleSignup = async (emailaddress, password) =>{
-    try {
-      await signIn(emailaddress,password)
-    }catch{
-          setErrors('not working')
-    }
-  }
+ 
      
     return (
       <View style ={global.Logincontainer}>
@@ -27,7 +23,8 @@ const LoginForm = () =>{
           initialValues={{emailaddress : '' , password : ''}}
           onSubmit={(values) =>{
           //console.log();
-          handleSignup(values.emailaddress,values.password);
+          signIn(values.emailaddress,values.password);
+          Login();
           //alert('done');
           }}
           >

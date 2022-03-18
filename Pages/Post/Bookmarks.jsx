@@ -8,28 +8,19 @@ import { Directions, TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from 'react-navigation';
 import PostCards from '../../Components/Cards';
 import JobCard from '../../Components/JobCard';
-import { useAuth } from '../../firebase/AuthProvider';
-
-
-
-
 // const theme = useTheme();
 // const styles = useStyles(theme);
 
-const Profile =  ({ navigation }) => {
+const Bookmarks =  ({ navigation }) => {
 
   const [Post ,setPost] = useState(null);
   const [Job ,setJob] = useState(false);
+  
+  return (
+    // Post === true ? setJob(false) : setPost(true)
+    // Job === false ? setJob(true) : setPost(false)
 
-  const {signOut} = useAuth();
-
-const HandleSignout = async () =>{
- 
-    await signOut()
-}
-
-    return (
-      <View style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.subContainer}>
           <View style={{flexDirection:'row'}}>
             <Button
@@ -67,72 +58,73 @@ const HandleSignout = async () =>{
         </View>
       </View> 
     </View>
-    );
-  }
+  );
+}
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#FFFFFF',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    textStyle:{
-      fontSize: 16,
-      color:'black', 
-      //marginTop : 5
-  
-    },
-    subContainer:{
-      flex : 1,
-      alignItems: 'center',
-      //justifyContent: 'center',
-      marginTop : 5,
-      //marginBottom : 6,
-      //backgroundColor : 'black'
-      //borderWidth:1, 
-      //borderColor: "black"
-    },
-    PiconContainerStyle:{ 
-      //marginRight: 10,
-      marginTop : 5
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  PtitleStyle:{ 
-      fontWeight: '600',
-      alignItems : 'center',
-      marginRight : 10,
-      color: '#233975',
-      //fontFamily: "Montserrat",
+  textStyle:{
+    fontSize: 16,
+    color:'black', 
+    //marginTop : 5
+
   },
-  PtitleStyleJ:{ 
+  subContainer:{
+    flex : 1,
+    alignItems: 'center',
+    //justifyContent: 'center',
+    marginTop : 5,
+    //marginBottom : 6,
+    //backgroundColor : 'black'
+    //borderWidth:1, 
+    //borderColor: "black"
+  },
+  PiconContainerStyle:{ 
+    //marginRight: 10,
+    marginTop : 5
+},
+PtitleStyle:{ 
     fontWeight: '600',
     alignItems : 'center',
     marginRight : 10,
-    color: '#FFFFFF',
+    color: '#233975',
     //fontFamily: "Montserrat",
-  },
-  PuttonStyle:{
-       backgroundColor: '#233975',
-       borderColor: 'transparent',
-       borderWidth: 1,
-       //borderRadius: 100
-  },
-  PuttonStyleJ:{
-    backgroundColor: 'white',
-    borderColor: 'transparent',
-    borderWidth: 1,
-    //borderRadius: 100
-  },
-  PcontainerStyle:{
-      //marginTop : 20,
-      //marginBottom : 20,
-       width: 200,
-       ///marginHorizontal: 50,
-       //marginVertical: 10,
-       //marginLeft: 20,
-       //marginTop : 30
-  },
-  });
-  
+},
+PtitleStyleJ:{ 
+  fontWeight: '600',
+  alignItems : 'center',
+  marginRight : 10,
+  color: '#FFFFFF',
+  //fontFamily: "Montserrat",
+},
+PuttonStyle:{
+     backgroundColor: '#233975',
+     borderColor: 'transparent',
+     borderWidth: 1,
+     //borderRadius: 100
+},
+PuttonStyleJ:{
+  backgroundColor: 'white',
+  borderColor: 'transparent',
+  borderWidth: 1,
+  //borderRadius: 100
+},
+PcontainerStyle:{
+    //marginTop : 20,
+    //marginBottom : 20,
+     width: 200,
+     ///marginHorizontal: 50,
+     //marginVertical: 10,
+     //marginLeft: 20,
+     //marginTop : 30
+},
+});
 
-export default Profile;
+
+
+export default Bookmarks;

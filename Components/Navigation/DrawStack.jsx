@@ -12,6 +12,8 @@ import React, { useState } from 'react';
 import { useTheme } from 'react-navigation';
 import { useAuth } from '../../firebase/AuthProvider'
 import TabStack from './TabStack';
+import ProfileNavigationStackComponent from '../../Components/Navigation/Profile';
+import PostNavigationStackComponent from './PostStack';
 import SearchHeader from '../Headers/SearchHeader';
 import CustomDraw from './CustomDraw';
 
@@ -19,7 +21,7 @@ const TabNavigator = createBottomTabNavigator();
 
 const Drawer = createDrawerNavigator();
 
-const DrawStack = ({theme ,na}) =>{
+const DrawStack = ({theme }) =>{
 
     //const { currentUser , notLogedin } = useAuth();
 
@@ -27,10 +29,12 @@ const DrawStack = ({theme ,na}) =>{
     <Drawer.Navigator
     screenOptions={({ navigation}) => ({
         headerShown : false,
+        // activeTintColor: '#e91e63',
+        // itemStyle: {marginVertical: 5},
     })}
     drawerContent={(props) => <CustomDraw {...props} />}>
-    <Drawer.Screen name={NavigationScreens.Home.name} component={TabStack} 
-     options={{drawerLabel: 'First page Option'}} />
+    <Drawer.Screen name = 'DrawerNavigation' component={TabStack}   options={{
+    drawerItemStyle: { height: 0 }}} />
     </Drawer.Navigator>
  )};
 

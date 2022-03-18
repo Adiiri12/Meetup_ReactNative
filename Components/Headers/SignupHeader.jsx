@@ -18,7 +18,7 @@ const SignUpHeader = ({props}) => {
                 type="ionicon"
                 name="ios-arrow-back-outline" 
                 color="white"
-                //onPress={() => navigations.goBack()}
+                onPress={() => navigations.goBack()}
                 />
                 
             }
