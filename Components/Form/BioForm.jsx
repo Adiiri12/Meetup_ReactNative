@@ -79,10 +79,10 @@ const BioForm = (props) =>{
                     <Text style={styles.LoginText}>Profile</Text>
                     <TouchableOpacity style = {global.image} onPress={() => {pickImage()}} > 
                         { image !== '' && 
-                            <ImageBackground source={{ uri: image }} resizeMode= "cover" style = {{width : 90 , height : 80}}/>
+                            <ImageBackground source={{ uri: image }} resizeMode= "cover" style = {{marginLeft : -3.3 , width : 105 , height : 95}}/>
                           }
                             { image == '' && 
-                            <ImageBackground source={require('../../assets/Avatar_Dark.png')} resizeMode= "cover" style = {{width : 90 , height : 80}}/>}
+                            <ImageBackground source={require('../../assets/Avatar_Dark.png')} resizeMode= "cover" style = {{marginLeft : -3.3 , width : 105 , height : 95}}/>}
                     </TouchableOpacity>
                      <Text style={styles.LoginText}>Bio</Text>
                      <TextInput

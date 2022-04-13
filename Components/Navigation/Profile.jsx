@@ -11,6 +11,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import { DrawerActions } from '@react-navigation/native';
+import EditPost from '../../Pages/Profile/EditPost';
 import ProfileHeader from '../Headers/ProfileHeader';
 
 const ProfileNavigationStack = createStackNavigator();
@@ -59,6 +60,14 @@ const ProfileNavigationStackComponent = () => {
                         onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
                         />)
                         ,
+                }}
+            />
+              <ProfileNavigationStack.Screen
+                name={NavigationScreens.Edit.name}
+                component={EditPost}
+                options={{ 
+                    headerShown: true ,
+                    title : 'Edit Post'
                 }}
             />
         </ProfileNavigationStack.Navigator>

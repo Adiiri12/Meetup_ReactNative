@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import {KeyboardAvoidingView, TouchableOpacity, View, StyleSheet,Dimensions,Platform} from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
@@ -8,6 +8,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { global } from '../../CSS/Styles';
 import { Formik } from 'formik';
 import * as yup from 'yup'
+import { auth } from '../../firebase/firebase';
 import { useAuth } from '../../firebase/AuthProvider';
 import { useNavigation } from '@react-navigation/native';
 
@@ -30,17 +31,22 @@ const CreateAccountForm = ({props}) =>{
 
 
   const navigations = useNavigation();
-  const { signUp  } = useAuth();
   const [errors , setErrors] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(null);
+  const { signUp , setCurrentUser ,Logout, error } = useAuth();
 
-  const handleSignup = async (emailaddress, password) =>{
-    try {
-      await signUp(emailaddress,password)
-    }catch{
-          setErrors('not working')
-    }
-  }
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+     
+      if(user){
+        setCurrentUser(user);
+      }
+ 
+});
+return unsubscribe;
+},[]);
+
 
 
 
@@ -53,9 +59,14 @@ const CreateAccountForm = ({props}) =>{
           onSubmit={(values) =>{
           console.log(values);
           console.log(errors)
-          handleSignup(values.emailaddress,values.password);
-          alert('done');
-          navigations.navigate(NavigationScreens.Detail.name);
+          auth.createUserWithEmailAndPassword(values.emailaddress, values.password).then(()=>{
+            Logout()
+            navigations.navigate(NavigationScreens.Detail.name)
+        }).catch(error => { 
+            console.log(error)
+            alert('Account already exists')
+        })
+          //alert('done');
           }}
           >
               {(props) => ( 

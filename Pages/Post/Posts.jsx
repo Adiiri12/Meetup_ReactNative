@@ -17,6 +17,7 @@ import JobForm from '../../Components/Form/JobForm';
 
 const Post =  ({ navigation }) => {
 
+
   const [Posts ,setPost] = useState(null);
   const [Job ,setJob] = useState(false);
     return (
@@ -24,7 +25,7 @@ const Post =  ({ navigation }) => {
       <View style={styles.subContainer}>
           <View style={{flexDirection:'row'}}>
             <Button
-            title="Create Post"
+            title="Post's"
             iconContainerStyle = {styles.PiconContainerStyle}
             titleStyle = {Posts ? styles.PtitleStyle : styles.PtitleStyleJ}
             buttonStyle = {Posts ? styles.PuttonStyleJ : styles.PuttonStyle}
@@ -32,11 +33,11 @@ const Post =  ({ navigation }) => {
             onPress={() => {if(Posts){
               setPost(false)
               setJob(false)
-              console.log(Posts);
+              console.log(Post);
             }}}
             />
             <Button
-            title=" Create a Job"
+            title="Jobs"
             iconContainerStyle = {styles.PiconContainerStyle}
             titleStyle = {Job ? styles.PtitleStyleJ : styles.PtitleStyle}
             buttonStyle = {Job ? styles.PuttonStyle : styles.PuttonStyleJ}  
@@ -52,11 +53,11 @@ const Post =  ({ navigation }) => {
           <PostForm/>
           }
           {
-            Job && Posts && 
+            Job && Post && 
             <JobForm/>
           }
         </View>
-       </View> 
+      </View> 
       </SafeAreaView>
     );
   }

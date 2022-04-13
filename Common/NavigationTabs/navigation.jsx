@@ -7,7 +7,7 @@ export const NavigationTabs = {
 
 export const NavigationScreens = {
     Home : {name:'home', title : 'Home'},
-    Profile : {name:'profile', title : 'Profile'},
+    Profile : {name:'Profile', title : 'Profile'},
     Login : {name : 'login' , title : 'Login'},
     Search : {name:'Search', title : 'Search'},
     Post : {name:'Post', title : 'Post'},
@@ -22,7 +22,12 @@ export const NavigationScreens = {
 
     //Profile Screens
     Setting : {name:'Setting', title : 'Settings'},
+    Edit :{name: 'Edit' , title : 'Edit'},
 
     //Post Screen:
-    Bookmarks : {name : 'Bookmarks' , title : 'Bookmark' }
+    Bookmarks : {name : 'Bookmarks' , title : 'Bookmark' },
+
+    //Search Screens
+    SearchResults : {name : 'SearchResults' , title : 'SearchResults'},
+    SearchProfile : {name: 'SearchProfile' , title: 'SearchProfile'}
 }

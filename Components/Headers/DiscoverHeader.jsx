@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { Header ,  Text , Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView,TextInput} from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
 import { NavigationScreens, NavigationTabs } from '../../Common/NavigationTabs/navigation';
@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const DiscoverHeader = ({navigation}) => {
     const navigations = useNavigation();
+    const[name ,setName] = useState('');
     //console.log(navigation);
     return (
           <Header
@@ -17,6 +18,9 @@ const DiscoverHeader = ({navigation}) => {
             centerComponent = {
               <View style= {styles.Sinput}>
                     <TouchableOpacity
+                     onPress = {() => navigations.navigate(NavigationScreens.SearchResults.name,{
+                      name : name
+                    })}
                     >
                      <Icon
                       type="ionicon"
@@ -26,7 +30,8 @@ const DiscoverHeader = ({navigation}) => {
                       style={{marginRight : 260, marginTop : 6}}
                       />
                     <TextInput style ={{color:'black',fontSize:13 , marginLeft : 40 , marginTop : -17}}
-                     placeholder = 'email address'
+                     placeholder = 'seach'
+                     onChangeText = {(val) => setName(val)}
                     />
                   </TouchableOpacity>
               </View>

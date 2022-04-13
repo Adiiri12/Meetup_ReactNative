@@ -15,34 +15,35 @@ import { auth, firestore , storage } from '../../firebase/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
-import { UpdateUser , getUserbyEmail } from '../../firebase/UserProvider';
+import { CreatePost } from '../../firebase/PostProvider';
+import { getUserbyEmail } from '../../firebase/UserProvider';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const UpdateAccountForm = (props) =>{
+const UpdatePostForm = (props) =>{
 
   const navigations = useNavigation();
-  const {currentUser} = useAuth();
-  const [email, setEmail] = useState (currentUser.email);
-  const [account_name , setAccount] = useState('');
-  const [image, setImage] = useState('');
-  
-  const [user, setUsers] = useState([]);
-  const [loadinguUsers, setLoadinguUsers] = useState(false);
-  const [update , setUpdate] = useState(false)
 
+    const [image, setImage] = useState('');
+    const {currentUser} = useAuth();
+    const [user, setUsers] = useState([]);
+    const [loadinguUsers, setLoadinguUsers] = useState(false);
+    const [update , setUpdate] = useState(false)
+
+
+    console.log(props.props.image)
     useEffect(() => {
         loadinguUser();
         //setAccount(user.bio);
 
     },[])
 
-    
     const loadinguUser = async () => {
         try {
             setLoadinguUsers(true);
-            const users = await getUserbyEmail(email);
+            const users = await getUserbyEmail(currentUser.email);
             setUsers(users)
             //setImage(users.imageURL)
             //console.log(user)
@@ -53,9 +54,10 @@ const UpdateAccountForm = (props) =>{
         }
     };
 
-   const UpdateUsers = async(image, account_name , bio) =>{
+
+   const EditPost = async(image, tilte , description) =>{
         setUpdate(true);
-        const updating = await UpdateUser(image,account_name,bio,user.first_name,user.last_name,currentUser.uid,email)
+        const updating = await CreatePost(image,tilte,description,currentUser.email)
         try{
         if(updating){
             setUpdate(false)
@@ -65,7 +67,7 @@ const UpdateAccountForm = (props) =>{
             setUpdate(false);
         }
    }
-
+   
     const pickImage = async () => {
 
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -91,76 +93,51 @@ const UpdateAccountForm = (props) =>{
       };
     
     return (
-
-       
         <View style ={global.CreateContainer}>
         <Formik
-        enableReinitialize 
-        initialValues={{
-            account_name : user.account_name, 
-            bio : user.bio
-        }}
+         enableReinitialize 
+         initialValues={{
+             title : '', 
+             bio : ''
+         }}
         onSubmit={(values) =>{
-        //values.Account_name ===  '' ? values.Account_name = user.bio : values.Account_name = values.Account_name;
-        //console.log(values)
-        //onsole.log(values.account_name);
-        console.log(values.bio);
-        UpdateUsers(image,values.account_name,values.bio)
-        //console.log(currentUser.uid)
-        }
-    }
+        console.log(values);
+        NewPost(image,values.title,values.description)
+        }}
         >
-            {(props) => (
+            {(props) => ( 
                <View>
                     {update &&
                     <View style={styles.loading}>
                       <ActivityIndicator size='large' color="#0000ff" />
                     </View>
                     } 
-                   <View style = {{flexDirection : 'row'}}>
-                       <Text style = {styles.advance}>Advance details (email & password) :</Text>
-                       <TouchableOpacity>
-                       <Icon
-                        type="ionicon"
-                        name="chevron-forward-circle" 
-                        color="#233975"
-                        size = '30'
-                        style={{ marginLeft : 80 , marginTop : -4}}
-                       />
-                    </TouchableOpacity>
-                   </View>
-                  <Text style={styles.CT1}>Display Picture : </Text>
-                  <TouchableOpacity
-                  onPress={() => {pickImage()}}
-                  >
-                { image == '' && 
-                  <Avatar.Image size={70} style = {{alignSelf : 'center' , paddingBottom : -8}}source={{uri : user.imageURL}} disabled ={update} colour = {'black'}/>
-                  }
-                { image != '' && 
-                  <Avatar.Image size={70} style = {{alignSelf : 'center' , paddingBottom : -8}}source={{uri : image }} disabled ={update} colour = {'black'}/>
-                  }
-                  </TouchableOpacity>
-                  <Text style={styles.CTs}>Account_name</Text>
+                  <Text style={styles.CT1}>Title</Text>
                  <TextInput
                   style = {global.CreateInput}
-                  //placeholder = {user.account_name}
-                  placeholderTextColor= 'black'
-                  onChangeText={props.handleChange('account_name')}
-                  value={props.values.account_name}
-                  disabled = {update}
-                 />
-                <Text style={styles.CTs}>Bio</Text>
-                  <TextInput
-                  style = {global.multi}
-                  placeholder = {user.bio}
-                  placeholderTextColor= 'black'
-                  multiline={true}
-                  numberOfLines = {4}
-                  onChangeText={props.handleChange('bio')}
-                  value={props.values.bio}
+                  placeholder = 'Title'
+                  onChangeText={props.handleChange('title')}
+                  value={props.values.title}
+                  />
+                 <Text style={styles.CT1}>Add Image</Text>
+                 <TouchableOpacity style = {global.multi2} onPress={() => {pickImage()}} > 
+                        { image !== '' && 
+                            <ImageBackground source={{ uri: image }} resizeMode= "contain" style = {{flex:1 , width: undefined, height: undefined}}/>
+                          }
+                            { image == '' && 
+                            <ImageBackground source={{ uri: props.props.image? props.props.image : '' }} resizeMode= "cover" style = {{flex:1 , width: undefined, height: undefined}}/>}
+                    </TouchableOpacity>
+                 <Text style={styles.CT1}>Add Description</Text>
+                 <TextInput
+                     style = {global.multi}
+                     placeholder = 'Description'
+                     multiline={true}
+                     numberOfLines = {4}
+                     onChangeText={props.handleChange('description')}
+                     value={props.values.description}
                  />
               <Button
-              title="Update"
+              title="Add"
               iconContainerStyle = {global.BiconContainerStyle}
               titleStyle = {global.CtitleStyle}
               buttonStyle = {global.ButtonStyle2}
@@ -192,34 +169,36 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         //marginTop: 20,
         //marginBottom : 10,
-        marginLeft : 10,
+       // marginLeft : 10,
         //fontFamily: "monospace",
-        fontSize : 14,
+        fontSize : 16,
         fontWeight: '300',
         color : '#233975'
     },
     CT1:{
-        textAlign: 'left',
-        marginTop: 20,
-        marginBottom : 10,
-        //marginLeft : 40,
+        //textAlign: 'left',
+        marginTop: 10,
+        marginBottom : 5,
+        marginRight : 40,
         alignSelf : 'center',
         fontSize : 14,
-        fontWeight: '300',
+        fontWeight: '400',
         color : '#233975'
     },
-    loading: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }
+    LoginText:{
+        //textAlign: 'centre',
+        marginTop: 20,
+        marginBottom : 20,
+        alignSelf : 'center',
+        marginLeft : -50,
+        //fontFamily: "Montserrat",
+        fontSize: 15,
+        fontWeight: "bold",
+        color: "#233975"
+    },
 })
 
 
-export default UpdateAccountForm;
+export default UpdatePostForm;
 
 

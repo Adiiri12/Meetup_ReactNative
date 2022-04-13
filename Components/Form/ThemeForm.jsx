@@ -12,6 +12,7 @@ import { Zocial } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../firebase/AuthProvider';
 import { auth, firestore , storage } from '../../firebase/firebase';
+import { Follow } from '../../firebase/FollowingProvider';
 
 
 
@@ -72,6 +73,7 @@ const ThemeForm = () =>{
             console.log(...Row)
             //console.log(...Row)
             Themes(Row);
+            Follow(currentUser.email)
             navigations.navigate(NavigationScreens.Login.name)
             
           }}

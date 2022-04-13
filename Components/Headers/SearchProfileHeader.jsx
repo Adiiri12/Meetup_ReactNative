@@ -1,29 +1,33 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { Header ,  Text , Button } from 'react-native-elements';
+import { Header ,  Text } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react'
-import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView} from 'react-native';
+import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView,ActivityIndicator} from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
 import { NavigationScreens, NavigationTabs } from '../../Common/NavigationTabs/navigation';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { useNavigation } from '@react-navigation/native';
-import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar, Card, Title, Paragraph ,Button } from 'react-native-paper';
 import { useAuth } from '../../firebase/AuthProvider';
 import { getUserbyEmail }  from '../../firebase/UserProvider';
+import { Follow , UnFollow,checkFollower } from '../../firebase/FollowingProvider';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const ProfileHeader = ({navigation}) => {
- 
-  
+const  SearchProfileHeader = ({navigation,props}) => {
+    //console.log('im at searchProifile')
+    //console.log(props)
+    const navigations = useNavigation();
     const {currentUser} = useAuth();
-    //getUserbyEmail(currentUser.email)
+    //console.log(currentUser.email)
     //console.log(navigation);
     const [user, setUsers] = useState([]);
     const [loadinguUsers, setLoadinguUsers] = useState(false);
+    const [follow, setFollow] = useState();
 
     useEffect(() => {
+        //console.log(props)
         loadinguUser();
     },[])
 
@@ -31,9 +35,13 @@ const ProfileHeader = ({navigation}) => {
     const loadinguUser = async () => {
         try {
             setLoadinguUsers(true);
-            const users = await getUserbyEmail(currentUser.email);
+            const users = await getUserbyEmail(props);
+            const check = await checkFollower(currentUser.email,props)
+            //console.log(check)
+            setFollow(check)
             setUsers(users)
-            console.log(user)
+            console.log(user.imageURL)
+
         } catch (err) {
            console.log(err)
         } finally {
@@ -41,24 +49,48 @@ const ProfileHeader = ({navigation}) => {
         }
     };
 
+    
+
     return (
           <Header
            containerStyle = {styles.headerContainer}
             centerComponent = {
               <View style = {{ width : windowWidth/1.1 , alignItems: 'center', justifyContent : 'center',}}>
-                  { user.imageURL == undefined && 
-                   <Avatar.Image size={50} source={require('../../assets/Avatar_Light.png')} colour = {'black'} onPress={() => {console.log('works')}}/>
-                  }
-                  {
-                      user.imageURL != undefined &&
-                      <Avatar.Image size={50} source={{uri : user.imageURL}} colour = {'black'} onPress={() => {console.log('works')}}/>
-                  }
+                <Avatar.Image size={57}  onLoadEnd = {user.imageURL} source={ {uri : user.imageURL}} colour = {'black'} onPress={() => {console.log('works')}}/>
                 <View style =  {{flexDirection : 'row' , marginTop : 20 , marginBottom : 10}}>
                     <Text style = {{fontSize : 12 , color : 'white'}}> Following 5</Text>
                     <Text style = {{ fontSize : 12 , color : 'white'}}> Follwers 25</Text>
                 </View>
                 <View style = {{marginTop : 10 , marginBottom : 0}}>
-                <Text style = {{marginLeft : -15 , fontSize : 12 , color : 'white'}}>Bio: Welcome to my account I am a belive that everyone should re</Text>
+                <Text style = {{marginLeft : -15 , fontSize : 12 , color : 'white'}}>{user.bio}</Text>
+                </View>
+                <View style = {{marginTop : 10 , marginBottom : 0}}>
+                {!follow &&
+                 <Button  mode="outlined" 
+                  onPress={() => {
+                    console.log('Follow');
+                    setFollow(true)
+                    Follow(currentUser.email,props)
+
+                }}
+                  style = {{backgroundColor : '#ffffff'}}
+                  labelStyle = {{fontSize : 12, color : '#233975'}}
+                  >
+                   Follow
+                 </Button>
+             }{follow &&
+                 <Button  mode="outlined" 
+                  onPress={() => {
+                    console.log('Unfollow');
+                    setFollow(false)
+                    UnFollow(currentUser.email,props)
+                }}
+                  style = {{backgroundColor : '#ffffff'}}
+                  labelStyle = {{fontSize : 12, color : '#233975'}}
+                  >
+                   Unfollow
+                 </Button>
+            }
                 </View>
               </View>
             }
@@ -123,4 +155,4 @@ const ProfileHeader = ({navigation}) => {
 
 
 
-export  default ProfileHeader;
+export  default SearchProfileHeader;

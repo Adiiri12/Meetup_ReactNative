@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const SignUpHeader = ({props}) => {
     const navigations = useNavigation();
-    console.log(props);
+    //console.log(props);
     return (
           <Header
            containerStyle = {styles.headerContainer}

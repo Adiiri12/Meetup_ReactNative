@@ -10,7 +10,6 @@ import { getUserbyEmail } from '../firebase/UserProvider';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationScreens } from '../Common/NavigationTabs/navigation';
 import { Menu,MenuOptions, MenuOption, MenuTrigger} from 'react-native-popup-menu';
-import { deleteJob } from '../firebase/JobProvider';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -23,13 +22,12 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-const JobCard = ({props}) => {
+const AllJobsCard = ({props}) => {
 
     const navigations = useNavigation();
     const {currentUser} = useAuth();
     const [user, setUsers] = useState([]);
     const [loadinguUsers, setLoadinguUsers] = useState(false);
-    const [id , setId] = useState(props.id)
 
     useEffect(() => {
          loadinguUser();
@@ -39,7 +37,7 @@ const JobCard = ({props}) => {
     const loadinguUser = async () => {
         try {
             setLoadinguUsers(true);
-            const users = await getUserbyEmail(props.email);
+            const users = await getUserbyEmail(props.Job.email);
             setUsers(users)
             console.log(users)
         } catch (err) {
@@ -49,59 +47,15 @@ const JobCard = ({props}) => {
         }
     };
 
-    if(props.email === currentUser.email){
-    const LeftContent = props => <Avatar.Image style = {{marginLeft:-20}} size={50} source={ {uri : user.imageURL}} onPress={() => {}}/>
-    const RightContent = props => 
-    <Menu style={{marginRight:10,padding:10}}>
-   <MenuTrigger>
-      <Ionicons name="menu" size={30} color='#233975' />
-   </MenuTrigger>
-      <MenuOptions style={{padding:5}}>
-         <MenuOption onSelect={() => {
-            alert('Job delete')
-            deleteJob(id,currentUser.email)
-            //setLoadinguUsers(true)
-            console.log(props)
-            //setLoadinguUsers(true)
-            }} >
-            <Text style={{color: 'black'}}>Delete</Text>
-         </MenuOption>
-      </MenuOptions>
-   </Menu>
-    
-    return (
-        <Card style = {styles.card}>
-        <Card.Content style = {{marginTop: -10}}>
-          <Card.Title titleStyle = {{ color : '#233975', fontSize : 16}} title={user.account_name} left={LeftContent} right={RightContent}/>
-          <Title style = {{ marginLeft : 70 , marginTop : -25, marginBottom : 10 , color : '#233975' , fontSize : 16,fontWeight : '600'}}>{props.title}</Title>  
-          <Title style = {{ marginLeft : 70 , marginTop : -20, marginBottom : 10 , color : '#233975' , fontSize : 16,fontWeight : '400'}}>Click to View more or Apply</Title>   
-    
-        </Card.Content>
-       
-        <Card.Actions>
-          <Button mode='contained' color='#233975' 
-          style = {{borderRadius : 100, marginLeft : 75 , width : 200}}
-          labelStyle = {{marginRight : 25}}
-           >
-            View More</Button>
-            <Button icon = 'bookmark-outline' color='#233975' 
-            style = {{marginLeft : 20}}
-            labelStyle={{fontSize: 25}}
-           >
-           </Button>
-        </Card.Actions>
-        
-      </Card>
-    );
-  }if(props.email !== currentUser.email){
+
     const LeftContent = props => <Avatar.Image style = {{marginLeft:-20}} size={50} source={ {uri : user.imageURL}} onPress={() => {}}/>
     
     return (
         <Card style = {styles.card}>
         <Card.Content style = {{marginTop: -10}}>
           <Card.Title titleStyle = {{ color : '#233975', fontSize : 16}} title={user.account_name} left={LeftContent}/>
-
-          <Title style = {{ marginLeft : 60 , marginTop : -15, marginBottom : 5 , color : '#233975' , fontSize : 16,fontWeight : '400'}}>Click to View more or Apply</Title>   
+          <Title style = {{ marginLeft : 70 , marginTop : -25, marginBottom : 10 , color : '#233975' , fontSize : 16,fontWeight : '600'}}>{props.Job.title}</Title>  
+          <Title style = {{ marginLeft : 70 , marginTop : -15, marginBottom : 5 , color : '#233975' , fontSize : 16,fontWeight : '400'}}>Click to View more or Apply</Title>    
     
         </Card.Content>
        
@@ -120,7 +74,6 @@ const JobCard = ({props}) => {
         
       </Card>
     );
-  }
 
 }
 
@@ -163,4 +116,4 @@ const styles = StyleSheet.create({
    }
   }
 );
-export default JobCard;
+export default AllJobsCard;

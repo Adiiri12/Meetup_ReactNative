@@ -9,7 +9,7 @@ import { global } from '../../CSS/Styles';
 
 const LoginForm = () =>{
 
-  const { signIn , Login} = useAuth();
+  const { signIn , Login , notLogedin} = useAuth();
   const [errors , setErrors] = useState('');
   const [loading, setLoading] = useState(false);
   const [emailaddress , setAdress] = useState('')
@@ -23,8 +23,13 @@ const LoginForm = () =>{
           initialValues={{emailaddress : '' , password : ''}}
           onSubmit={(values) =>{
           //console.log();
+          try{
           signIn(values.emailaddress,values.password);
-          Login();
+          console.log(notLogedin)
+          }catch(error){
+            console.log(error)
+          }
+          //Login();
           //alert('done');
           }}
           >

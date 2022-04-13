@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import {NavigationTabs} from '../../Common/NavigationTabs/navigation';
 import {NavigationScreens} from '../../Common/NavigationTabs/navigation';
 import LoginStackComponent from './LoginStack';
+import Post from '../../Pages/Post/Posts';
+import Profile from '../../Pages/Profile/Profile';
 import HomeNavigationStackComponent from '../../Components/Navigation/HomeStack';
 import ProfileNavigationStackComponent from '../../Components/Navigation/Profile';
 import PostNavigationStackComponent from './PostStack';
@@ -20,12 +22,14 @@ const TabStack = ({theme}) =>{
 
  return (
         <TabNavigator.Navigator
+        initialRouteName= {NavigationScreens.Profile.name}
          screenOptions={({ route }) => ({
              headerShown : false,
              tabBarShowLabel : false,
              tabBarStyle:{
                 backgroundColor : '#233975'
               },
+
             tabBarIcon: ({ focused, color , size}) => {
                 let iconName = '';
                 if (route.name === NavigationTabs.Home.name) {
@@ -60,7 +64,7 @@ const TabStack = ({theme}) =>{
                     <TabNavigator.Screen
                         name={NavigationTabs.Post.name}
                         component={PostNavigationStackComponent}
-                        //options={{ title: NavigationScreens.Post.title}}
+                        //options={{ unmountOnBlur: true}
                     />
                        <TabNavigator.Screen
                         name={NavigationTabs.Search.name}
@@ -69,6 +73,7 @@ const TabStack = ({theme}) =>{
                      <TabNavigator.Screen
                         name={NavigationTabs.Profile.name}
                         component={ProfileNavigationStackComponent}
+                        options={{ unmountOnBlur: true}}
                     />
         </TabNavigator.Navigator>
  )};

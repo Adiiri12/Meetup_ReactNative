@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { auth } from './firebase';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationScreens } from '../Common/NavigationTabs/navigation';
 const AuthContext = React.createContext();
 
+
 export const AuthProvider = ({ children }) => {
+    //const navigations = useNavigation();
     const [currentUser, setCurrentUser] = useState(null);
-    const [NotSignedUp, setNotSignedUp] = useState(false);
-
-    const [notLogedin, setLogedin] = useState(false);
-
+  
+    const [notLogedin, setLogedin] = useState(null);
+    const [signedUp , setSignedUp] = useState(null);
     const [loading, setLoading] = useState(false);
     
     const Login = () =>{
@@ -16,14 +19,30 @@ export const AuthProvider = ({ children }) => {
     const Logout = () =>{
         return setLogedin(false);
     }
-    const signUp = (email, password) => {
-        return auth.createUserWithEmailAndPassword(email, password);
+    const signUp =  (email, password) => {
+        return auth.createUserWithEmailAndPassword(email, password).then(()=>{
+            setLogedin(false)
+        }).catch(error => { 
+            console.log(error)
+        })
     };
-    const signIn = (email, password) => {
-        return auth.signInWithEmailAndPassword(email, password);
+    const signIn = async (email, password) => {
+       
+    
+        return auth.signInWithEmailAndPassword(email, password).then(()=>{
+            setLogedin(true)
+        }).catch(error => { 
+            console.log(error)
+        }).finally(() =>{
+        })
+       
     };
-    const signOut = () => {
-        return auth.signOut();
+    const signOut = async () => {
+        return auth.signOut().then(()=>{
+            Logout();
+        }).catch(error => { 
+            alert(error) 
+        });;
     };
     const resetPassword = (email) => {
         return auth.sendPasswordResetEmail(email);
@@ -38,8 +57,11 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
      
+               if(user){
                 setCurrentUser(user);
                 setLoading(false);
+                setSignedUp(true)
+               }
           
         });
         return unsubscribe;
@@ -47,7 +69,9 @@ export const AuthProvider = ({ children }) => {
 
     const value = {
         currentUser,
+        setCurrentUser,
         notLogedin,
+        signedUp,
         Login,
         Logout,
         signIn,

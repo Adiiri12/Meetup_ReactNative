@@ -14,6 +14,7 @@ import { useTheme } from 'react-navigation';
 import { useAuth } from '../../firebase/AuthProvider';
 import TabStack from './TabStack';
 import DrawStack from './DrawStack';
+import { MenuProvider } from 'react-native-popup-menu';
 
 
 
@@ -21,15 +22,17 @@ import DrawStack from './DrawStack';
 const Navigation = ({theme}) =>{
 
     const { currentUser , notLogedin } = useAuth();
-    const [log ,  notLog] = useState(true);
+    //const [log ,  notLog] = useState(true);
 
     console.log(notLogedin)
  return (
+   <MenuProvider>
     <NavigationContainer theme={theme}>
          {!notLogedin && <LoginStackComponent />}
-         {notLogedin && (
+         {currentUser && notLogedin && (
             <DrawStack/>)}
     </NavigationContainer>
+    </MenuProvider>
  )};
 
  export default Navigation;

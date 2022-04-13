@@ -1,16 +1,42 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { Header ,  Text , Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import {KeyboardAvoidingViewBase, TouchableOpacity, View, StyleSheet,Dimensions,SafeAreaView} from 'react-native';
 import { DrawerActions } from '@react-navigation/native';
 import { NavigationScreens, NavigationTabs } from '../../Common/NavigationTabs/navigation';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+import { useAuth } from '../../firebase/AuthProvider';
+import { getUserbyEmail } from '../../firebase/UserProvider';
 
 const SearchHeader = ({navigation}) => {
-    const navigations = useNavigation();
+
+const navigations = useNavigation();
+const {currentUser} = useAuth();
+const [user, setUsers] = useState([]);
+const [loadinguUsers, setLoadinguUsers] = useState(false);
+//console.log(props.id);
+
+
+useEffect(() => {
+    loadinguUser();
+},[])
+
+
+const loadinguUser = async () => {
+    try {
+        setLoadinguUsers(true);
+        const users = await getUserbyEmail(currentUser.email);
+        setUsers(users)
+        //console.log(user)
+    } catch (err) {
+       console.log(err)
+    } finally {
+        setLoadinguUsers(false);
+    }
+};
     //console.log(navigation);
     return (
           <Header
@@ -21,7 +47,7 @@ const SearchHeader = ({navigation}) => {
                     style= {styles.image}
                     onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
                   >
-                  <Avatar.Image size={47} source={require('../../assets/Avatar_Light.png')} colour = {'black'} onPress={() => {console.log('works')}}/>
+                  <Avatar.Image size={47}  source={ {uri : user.imageURL}} colour = {'black'} onPress={() => {console.log('works')}}/>
                   </TouchableOpacity>
                 </View>
             }

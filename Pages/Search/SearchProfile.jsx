@@ -10,18 +10,21 @@ import PostCards from '../../Components/Cards';
 import JobCard from '../../Components/JobCard';
 import { useAuth } from '../../firebase/AuthProvider';
 import { getUserPost } from '../../firebase/PostProvider';
-import { getUserJob } from '../../firebase/JobProvider';
 import { getUserbyEmail } from '../../firebase/UserProvider';
+import { getUserJob } from '../../firebase/JobProvider';
+import SearchProfileHeader from '../../Components/Headers/SearchProfileHeader';
 
 
 
 
+// const theme = useTheme();
+// const styles = useStyles(theme);
 
+const SearchProfile =  ({ navigation, route }) => {
 
-const Profile =  ({ navigation }) => {
-
- 
-
+const {email} = route.params;
+console.log(email); 
+  //const {currentUser} = useAuth();
   const [user, setUsers] = useState([]);
   const [loadinguUsers, setLoadinguUsers] = useState(false);
   const [userPost , setUserPost] = useState([]);
@@ -30,20 +33,24 @@ const Profile =  ({ navigation }) => {
   const [loadingPost, setLoadingPost] = useState(null);
   const [Post ,setPost] = useState(null);
   const [Job ,setJob] = useState(false);
-
-
   
   useEffect(() => {
-     loadingPosts();
-     loadingJobs();
+    navigation.setOptions({
+        headerShown: true,
+        header : () => (<SearchProfileHeader props = {email}/>)
+        
+    });
+    //loadinguUser();
+    loadingPosts();
+    loadingJobs();
+    loadinguUser();
     //console.log(currentUser.email);
-},[]);
-
+},[])
 
 const loadinguUser = async () => {
   try {
       setLoadinguUsers(true);
-      const users = await getUserbyEmail(currentUser.email);
+      const users = await getUserbyEmail(email);
       setUsers(users)
       //console.log(user)
   } catch (err) {
@@ -56,7 +63,7 @@ const loadinguUser = async () => {
 const loadingPosts = async () =>{
 try{
   setLoadingPost(true);
-  const post = await getUserPost(currentUser.email);
+  const post = await getUserPost(email);
   setUserPost(post)
   //console.log(post)
  } catch (err) {
@@ -66,20 +73,18 @@ try{
 }
 }
 
-
 const loadingJobs= async () =>{
-  try{
-    setLoadingJob(true);
-    const job = await getUserJob(currentUser.email);
-    setUserJobs(job)
-    //console.log(job)
-   } catch (err) {
-    console.log(err)
-  } finally {
-    setLoadingJob(false);
-  }
-  }
-
+    try{
+      setLoadingJob(true);
+      const job = await getUserJob(email);
+      setUserJobs(job)
+      //console.log(job)
+     } catch (err) {
+      console.log(err)
+    } finally {
+      setLoadingJob(false);
+    }
+    }
 
 return (
   // Post === true ? setJob(false) : setPost(true)
@@ -112,17 +117,17 @@ return (
           }}}
           />
       </View>
+      < View style = {{flex : 1, marginTop : 7}}>
       { !Job && userPost == 0 &&
       <View>
-        <Text style = {{marginTop : 70}}>Start Creating Posts and Jobs</Text>
+        <Text style = {{marginTop : 70}}>   User has no Post or Jobs</Text>
         <Button
-          title="Create Jobs"
+          title="No Post Availabe"
           iconContainerStyle = {styles.PiconContainerStyle}
           titleStyle = {styles.PtitleStyle}
           buttonStyle = {styles.PuttonStyleJ}  
           containerStyle = {styles.PcontainerStyle}
           onPress={() => {
-            //navigations.navigate(NavigationTabs.Post.name)
             //setLoadingFollowers(true)
           }}
           />
@@ -130,22 +135,19 @@ return (
       }
         {Job && Post &&  userJobs == 0 &&
       <View>
-        <Text style = {{marginTop : 70}}>Start Creating Posts and Jobs</Text>
+        <Text style = {{marginTop : 70}}>   User has no Post or Jobs</Text>
         <Button
-          title="Create Posts"
+          title="No Job Posts Availabe"
           iconContainerStyle = {styles.PiconContainerStyle}
           titleStyle = {styles.PtitleStyle}
           buttonStyle = {styles.PuttonStyleJ}  
           containerStyle = {styles.PcontainerStyle}
           onPress={() => {
-            //navigations.navigate(NavigationTabs.Post.name)
             //setLoadingFollowers(true)
           }}
           />
       </View>
       }
-
-      < View style = {{flex : 1, marginTop : 7}}>
         { !Job &&
         <FlatList
         data = {userPost}
@@ -162,20 +164,20 @@ return (
       </FlatList>
         }
         {
-          Job && Post && 
-          <FlatList
-          data = {userJobs}
-           keyExtractor={item => item.id}
-           //numColumns={1}
-           horizontal = {false}
-           //extraData =  {selected}
-           renderItem = {({item , index}) => {
-                //console.log(item);
-                return (
-                  <JobCard props = {item}/>
-                )}}
-            >
-        </FlatList>
+            Job && Post && 
+            <FlatList
+            data = {userJobs}
+             keyExtractor={item => item.id}
+             //numColumns={1}
+             horizontal = {false}
+             //extraData =  {selected}
+             renderItem = {({item , index}) => {
+                  //console.log(item);
+                  return (
+                    <JobCard props = {item}/>
+                  )}}
+              >
+          </FlatList>
         }
       </View>
     </View> 
@@ -248,4 +250,4 @@ return (
   });
   
 
-export default Profile;
+export default SearchProfile;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   SafeAreaView,
   View,
@@ -14,23 +14,44 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {NavigationTabs} from '../../Common/NavigationTabs/navigation';
-import {NavigationScreens} from '../../Common/NavigationTabs/navigation';
-//import ProfileNavigationStackComponent from './Profile';
+import { NavigationScreens } from '../../Common/NavigationTabs/navigation';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+import { useAuth } from '../../firebase/AuthProvider';
+import { getUserbyEmail } from '../../firebase/UserProvider';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-
-// const Draw = async (screen) => {
-
-//   props.navigation.navigate(NavigationTabs.Home.name);
-//   navigation.dispatch(DrawerActions.openDrawer()
-
-
-// }
 
 const CustomDraw = (props ,navigation) => {
-  //console.log(props)
+
+
+
   const navigations = useNavigation();
+  const {currentUser , signOut} = useAuth();
+  const [user, setUsers] = useState([]);
+  const [loadinguUsers, setLoadinguUsers] = useState(false);
+  //console.log(props.id);
+
+
+  useEffect(() => {
+      loadinguUser();
+  },[])
+  
+  
+  const loadinguUser = async () => {
+      try {
+          setLoadinguUsers(true);
+          const users = await getUserbyEmail(currentUser.email);
+          setUsers(users)
+          console.log(user)
+      } catch (err) {
+         console.log(err)
+      } finally {
+          setLoadinguUsers(false);
+      }
+  };
+
+  //console.log(props)
     return (
         <SafeAreaView style={{flex: 1 ,backgroundColor : '#233975'}}>
         {/*Top Large Image */}
@@ -39,10 +60,10 @@ const CustomDraw = (props ,navigation) => {
         contentContainerStyle = {{backgroundColor : '#233975'}}
         >
         <View style = {{flexDirection : 'row'}}>
-        <Avatar.Image size={50} style = {{marginLeft: 8 , marginTop : -25}}source={require('../../assets/Avatar_Light.png')} colour = {'black'} onPress={() => {console.log('works')}}/>
-        <Text style ={styles.UserName}>Account Name</Text>
+        <Avatar.Image size={50} style = {{marginLeft: 8 , marginTop : -25}} source={ {uri : user.imageURL}} colour = {'black'} onPress={() => {console.log('works')}}/>
+        <Text style ={styles.UserName}>{user.account_name}</Text>
         </View>
-        <Text style ={styles.UserName}>Account_Name@email.com</Text>
+        <Text style ={styles.UserName}>{currentUser.email}</Text>
           <DrawerItemList {...props} 
           />
           <View style = {{flex : 1, backgroundColor : 'white', paddingTop:10}}>
@@ -67,6 +88,9 @@ const CustomDraw = (props ,navigation) => {
           </View>
         </DrawerContentScrollView>
         <View style ={{padding:20 , borderWidth : 1, borderTopColor : 'white', borderBottomColor : '#233975'}}>
+        <TouchableOpacity
+        onPress={() => {signOut()}}
+        >
         <Text
           style={{
             fontSize: 26,
@@ -78,6 +102,7 @@ const CustomDraw = (props ,navigation) => {
           }}>
           Sign Out
         </Text>
+        </TouchableOpacity>  
         </View>
       </SafeAreaView>
     );
